@@ -9,17 +9,23 @@
 <script>
 	var socket = io();
 	socket.emit('superDuperClientEvent', 'Sent an event from the client!');
-	socket.on('superDuperEvent', (data) => {
+	socket.on('superDuperEvent', data => {
 		document.querySelector('#superDuperEvent').innerHTML = data.text;
 	});
 
-	socket.on('broadcast', function (data) {
+	socket.on('broadcast', data => {
 		document.querySelector('#numberOfUsers').innerHTML = `${data} clients connected`;
+	});
+
+	socket.on('newclientconnect', data => {
+		document.querySelector('#newClientEmit').innerHTML = data.description;
+
 	});
 </script>
 
 <body>
 	<h2>Yo!</h2>
+	<p id="newClientEmit"></p>
 	<p id="numberOfUsers"></p>
 	<p id="superDuperEvent"></p>
 </body>

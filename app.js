@@ -13,6 +13,9 @@ io.on('connection', (socket) => {
 	clients++;
 	io.sockets.emit('broadcast', clients);
 
+	socket.emit('newclientconnect',{ description: `Welcome, there are ${clients} clients connected`});
+   	socket.broadcast.emit('newclientconnect',{ description: clients + ' clients connected!'})
+
 	setTimeout(function () {
 		socket.emit('superDuperEvent', { text: 'A custom event named superDuperEvent has fired!' });
 	}, 4000);
