@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<title>Hello world</title>
-	</head>
+<head>
+	<title>Hello world</title>
+</head>
 
-	<script src="/socket.io/socket.io.js"></script>
-	<script>
-		var socket = io();
-		socket.emit('superDuperClientEvent', 'Sent an event from the client!');		
-		socket.on('superDuperEvent', function(data){document.write(data.text)});
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var socket = io();
+	socket.emit('superDuperClientEvent', 'Sent an event from the client!');
+	socket.on('superDuperEvent', (data) => {
+		document.querySelector('#superDuperEvent').innerHTML = data.text;
+	});
 
-	</script>
+	socket.on('broadcast', function (data) {
+		document.querySelector('#numberOfUsers').innerHTML = `${data} clients connected`;
+	});
+</script>
 
-	<body>
-		<h2>Yo!</h2>
-	</body>
+<body>
+	<h2>Yo!</h2>
+	<p id="numberOfUsers"></p>
+	<p id="superDuperEvent"></p>
+</body>
 
 </html>

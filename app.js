@@ -6,20 +6,24 @@ app.get('/', (req, res) => {
 	res.sendfile('index.html');
 });
 
-//Whenever someone connects this gets executed
+
+let clients = 0;
+
 io.on('connection', (socket) => {
-	console.log('A user connected');
+	clients++;
+	io.sockets.emit('broadcast', clients);
 
 	setTimeout(function () {
-		socket.emit('superDuperEvent', { text: 'A custom event named superDuperEvent!' });
+		socket.emit('superDuperEvent', { text: 'A custom event named superDuperEvent has fired!' });
 	}, 4000);
-	
+
 	socket.on('superDuperClientEvent', (data) => {
 		console.log(data);
 	});
 
 	socket.on('disconnect', () => {
-		console.log('A user disconnected');
+		clients--;
+		io.sockets.emit('broadcast', clients);
 	});
 });
 
