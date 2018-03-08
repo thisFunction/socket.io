@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hello world</title>
+</head>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    var socket = io('/my-namespace');
+    socket.on('hi', (data) => {
+        document.body.innerHTML = '';
+        document.write(data);
+    });
+    socket.on('connect_failed',  () =>  {
+        document.write("Sorry, there seems to be an issue with the connection!");
+    })
+</script>
+
+<body></body>
+
+</html>
